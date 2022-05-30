@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');//import de mongoose qui va facilité la connaction avec la base de donnée
 //on importe le modèle de données
-const stuffRoutes = require('./routes/stuff');
+const stuffRoutes = require('./routes/stuff'); //on importe le router pour les produits
+const userRoutes = require('./routes/user'); //on importe le router pour l'authentification
 
 
 const app = express();
@@ -25,7 +26,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
-app.use('/api/stuff', stuffRoutes);
+app.use('/api/stuff', stuffRoutes); //on ajoute le router pour les produits
+app.use('/api/user', userRoutes); //on ajoute le router pour l'authentification
 // ******************************quiz partie 2***********************************************
 // app.post('/api/products', (req, res, next) => {
 //   const product = new Product({
