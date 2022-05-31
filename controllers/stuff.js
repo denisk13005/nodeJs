@@ -1,5 +1,6 @@
 const Thing = require('../models/thing');
 
+// on exporte la logique métier qui servira à créer un objet de type Thing vers le routeur
 exports.createThing = (req, res, next) => {
   const thing = new Thing({
     title: req.body.title,

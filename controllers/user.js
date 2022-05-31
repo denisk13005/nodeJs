@@ -1,9 +1,10 @@
 //ce fichier servira de controlleur pour l'authentification
 const User = require('../models/User'); //on importe le modèle de données User
 const bcrypt = require('bcrypt');// on importe bcrypt pour crypter le mot de passe
+const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
-  //on hash le mot de passe
+//on hash le mot de passe
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       //on crée un nouvel utilisateur
@@ -28,7 +29,7 @@ exports.login = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
-      //si l'utilisateur existe, on vérifie le mot de passe
+      //si l'utilisateur existe, on vérifie le mot de passe avec la méthode compare
       bcrypt.compare(req.body.password, user.password)
         .then(valid => {
           //si le mot de passe est invalide
@@ -38,7 +39,11 @@ exports.login = (req, res, next) => {
           //si le mot de passe est valide, on envoie un token et l'id de l'user
           res.status(200).json({
             userId: user._id,
-            token: 'TOKEN'
+            token: jwt.sign(
+              { userId: user._id }, //on signe le token avec l'id de l'utilisateur pour ne pas qu'un autre utilisateur puisse modifier un produit (seul celui avec l'id peut modifier ses produits)
+              'RANDOM_TOKEN_SECRET',//on définit un sel pour le token
+              { expiresIn: '24h' }//on définit une durée de validité du token
+            )
           });
         })
         

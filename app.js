@@ -20,14 +20,14 @@ app.use((req, res, next) => {
   //accéder à l'api depuis nimporte quelle origine
   res.setHeader('Access-Control-Allow-Origin', '*');
   //ajouter les headers pour les requêtes
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization','Accept-Language','Content-Canguage','Range');
   //envoie des requêtes get, post, put, delete
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
 app.use(bodyParser.json());
 app.use('/api/stuff', stuffRoutes); //on ajoute le router pour les produits
-app.use('/api/user', userRoutes); //on ajoute le router pour l'authentification
+app.use('/api/auth', userRoutes); //on ajoute le router pour l'authentification
 // ******************************quiz partie 2***********************************************
 // app.post('/api/products', (req, res, next) => {
 //   const product = new Product({
