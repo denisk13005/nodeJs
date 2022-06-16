@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 const mongoose = require('mongoose');//import de mongoose qui va facilité la connaction avec la base de donnée
 //on importe le modèle de données
 const stuffRoutes = require('./routes/stuff'); //on importe le router pour les produits
@@ -8,7 +9,7 @@ const userRoutes = require('./routes/user'); //on importe le router pour l'authe
 
 const app = express();
   //connection a la base de donnée en mettant le chemin de la base de donnée perso crée sur mongo db 
-mongoose.connect('mongodb+srv://denisk13005:Lucas*2808@cluster0.0zytcsg.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://denisk13005:${process.env.MONGO_PASSWORD}@cluster0.0zytcsg.mongodb.net/?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
